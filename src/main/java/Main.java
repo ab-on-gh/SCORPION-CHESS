@@ -1,5 +1,8 @@
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.move.Move;
+
+import main.java.gui;
+
 import java.util.Scanner;
 import java.util.List;
 import java.lang.Math;
@@ -32,6 +35,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        gui chessGUI = new gui(board);
+        chessGUI.set_board();
 
         // System.out.println("What side? 1- white 2-black");
         // int side = input.nextInt();
