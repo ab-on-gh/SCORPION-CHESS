@@ -91,13 +91,18 @@ public class gui extends JPanel {
                 String name = square.getName();
                 Square sq = Square.valueOf(name);
                 Piece piece = board.getPiece(sq);
+                String pieceIcon = "/images/" + piece.toString() + ".png";
 
-                if (piece == Piece.NONE) {
-                    square.setText("");
+                if (piece != Piece.NONE) {
+                    ImageIcon unscaled = new ImageIcon(getClass().getResource(pieceIcon));
+                    Image scaled = unscaled.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                    // scales the images cause they're too big otherwise
+                    ImageIcon icon = new ImageIcon(scaled);
+
+                    square.setIcon(icon);
                 } else {
-                    square.setText(iconHandler(piece));
+                    square.setIcon(null);
                 }
-                square.setFont(new Font("Arial", Font.PLAIN, 40));
             }
         }
     }
