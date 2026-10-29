@@ -10,6 +10,7 @@ import java.awt.*;
 public class gui extends JPanel {
 
     final Board board;
+
     final JFrame f = new JFrame("🦂 SCORPION CHESS 🦂");
     final JPanel p = new JPanel(new GridLayout(8, 8, 0, 0));
     final JButton[][] squares = new JButton[8][8];
@@ -23,7 +24,7 @@ public class gui extends JPanel {
     }
 
     public void setBoard() {
-        boolean white = true;
+        boolean userWhite = true;
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
@@ -42,7 +43,7 @@ public class gui extends JPanel {
 
                 int num;
                 char let;
-                if (white) {
+                if (userWhite) {
                     num = 8 - r;
                     let = (char) ('A' + c);
                 } else {
@@ -57,7 +58,7 @@ public class gui extends JPanel {
                 p.add(b);
 
                 b.addActionListener(e -> {
-                    continue; // placeholder, will call a method from new class moveHandler
+                    
                 });
             }
         }
