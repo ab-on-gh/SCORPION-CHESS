@@ -10,21 +10,22 @@ import java.awt.*;
 public class gui extends JPanel {
 
     final Board board;
+    final moveHandler mover;
 
     final JFrame f = new JFrame("🦂 SCORPION CHESS 🦂");
     final JPanel p = new JPanel(new GridLayout(8, 8, 0, 0));
     final JButton[][] squares = new JButton[8][8];
 
-    public gui(Board board) {
+    public gui(Board board, moveHandler mover) {
         this.board = board;
+        this.mover = mover;
     }
 
     public void closeBoard() {
         f.dispose();
     }
 
-    public void setBoard() {
-        boolean userWhite = true;
+    public void setBoard(boolean userWhite) {
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
@@ -58,7 +59,9 @@ public class gui extends JPanel {
                 p.add(b);
 
                 b.addActionListener(e -> {
-                    
+                    mover.handleClicks(name);
+                    updateBoard();
+                    checkGameOver();
                 });
             }
         }
@@ -69,6 +72,16 @@ public class gui extends JPanel {
         f.setSize(600, 600);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
+    }
+
+    private void checkGameOver() {
+        if (board.isMated()) {
+            System.out.println(board.getSideToMove() + " is mated!");
+            closeBoard();
+        } else if (board.isDraw()) {
+            System.out.println("Draw");
+            closeBoard();
+        }
     }
 
     public void updateBoard() {

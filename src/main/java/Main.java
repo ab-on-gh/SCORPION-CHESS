@@ -12,39 +12,15 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         scorpionEngine engine = new scorpionEngine(board);
-        gui chessGUI = new gui(board);
-        moveHandler mover = new moveHandler(board, chessGUI, engine);
-
-        chessGUI.setBoard();
+        moveHandler mover = new moveHandler(board, engine);
+        gui chessGUI = new gui(board, mover);
 
         boolean userWhite = true;
+
+        chessGUI.setBoard(userWhite);
+
         if (!userWhite) {
             mover.makeEngineMove();
-        }
-
-        while (!board.isMated() && !board.isDraw()) { // loop only runs when the game is not over (duh)
-
-            System.out.println("Enter a move (eg e2e4):");
-
-            String usermove = input.next();
-
-            boolean legalMade = mover.handleTurns(usermove);
-
-            if (!legalMade) {
-                input.nextLine();
-                System.out.println("Invalid move! Press Enter to continue.");
-                input.nextLine();
-                continue;
-            }
-
-        }
-
-        if (board.isMated()) {
-            System.out.println(board.getSideToMove() + " is mated!");
-            chessGUI.closeBoard();
-        } else {
-            System.out.println("Draw");
-            chessGUI.closeBoard();
         }
 
     }

@@ -7,13 +7,25 @@ import com.github.bhlangonijr.chesslib.Side;
 
 public class moveHandler {
     final Board board;
-    final gui chessGUI;
     final scorpionEngine engine;
+    String from = null;
 
-    public moveHandler(Board board, gui chessGUI, scorpionEngine engine) {
+    public moveHandler(Board board, scorpionEngine engine) {
         this.board = board;
-        this.chessGUI = chessGUI;
         this.engine = engine;
+    }
+
+    public void handleClicks(String selected) {
+        if (from == null) { // if we click a square for the first time remember it
+            from = selected;
+            return;
+        }
+
+        String usermove = from + selected; // the user move is from the first square to the second selected square
+        System.out.println(usermove);
+
+        handleTurns(usermove); // make the user's move
+        from = null; // reset the selection
     }
 
     public boolean handleTurns(String usermove) {
@@ -35,16 +47,15 @@ public class moveHandler {
                     // nothing
         }
         board.doMove(enginemove);
-        chessGUI.updateBoard();
     }
 
     private boolean makeUserMove(String usermove) {
         Move validmove = validateMove(usermove);
         if (validmove == null) {
+            System.out.println("INVALID MOVE REQUESTED");
             return false;
         } else {
             board.doMove(validmove);
-            chessGUI.updateBoard();
             return true;
         }
     }
@@ -55,7 +66,8 @@ public class moveHandler {
 
             String l = m.toString();
 
-            if (l.equals(usermove)) {
+            if (l.equalsIgnoreCase(usermove)) { // this was bugging out earlier cause capital lowercase whatever so we
+                                                // ignore the capitalization
                 return m;
             }
         }
