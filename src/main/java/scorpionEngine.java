@@ -33,7 +33,7 @@ public class scorpionEngine {
         Move e = null;
         for (Move m : legal) {
             board.doMove(m);
-            int score = minimax(3, true);
+            int score = minimax(4, true);
             board.undoMove();
 
             if (score > best) { // loops thru all the scores given some legal move has been made, store the best
@@ -47,7 +47,7 @@ public class scorpionEngine {
 
     private int minimax(int depth, boolean minimizing) {
         if (board.isMated() || depth == 0) {
-            return evalmove();
+            return evalmove(depth);
         }
 
         List<Move> legal = board.legalMoves();
@@ -84,11 +84,11 @@ public class scorpionEngine {
         }
     }
 
-    private int evalmove() {
+    private int evalmove(int depth) {
         if (board.isMated() && board.getSideToMove() == side) {
-            return -10000;
+            return (depth - 10000);
         } else if (board.isMated()) {
-            return 10000;
+            return (depth + 10000);
         } else {
             return 0;
         }
