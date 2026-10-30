@@ -1,10 +1,6 @@
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.Side;
 
-import java.util.Scanner;
-import java.util.List;
-import java.lang.Math;
-
 public class Main {
     static Board board = new Board();
 
