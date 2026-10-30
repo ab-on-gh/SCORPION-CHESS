@@ -1,5 +1,5 @@
 import com.github.bhlangonijr.chesslib.Board;
-import com.github.bhlangonijr.chesslib.move.Move;
+import com.github.bhlangonijr.chesslib.Side;
 
 import java.util.Scanner;
 import java.util.List;
@@ -9,13 +9,18 @@ public class Main {
     static Board board = new Board();
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        board.loadFromFen("7k/5K2/8/8/8/8/6R1/4b w - - 0 1");
+        boolean userWhite = false;
+        scorpionEngine engine;
 
-        scorpionEngine engine = new scorpionEngine(board);
+        if (userWhite) {
+            engine = new scorpionEngine(board, Side.BLACK);
+        } else {
+            engine = new scorpionEngine(board, Side.WHITE);
+        }
+
         moveHandler mover = new moveHandler(board, engine);
         gui chessGUI = new gui(board, mover);
-
-        boolean userWhite = true;
 
         chessGUI.setBoard(userWhite);
 
