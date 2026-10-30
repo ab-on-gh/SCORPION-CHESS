@@ -107,37 +107,4 @@ public class gui extends JPanel {
         }
     }
 
-    public String iconHandler(Piece piece) {
-        switch (piece) {
-            case WHITE_KING:
-                return "♔";
-            case WHITE_QUEEN:
-                return "♕";
-            case WHITE_ROOK:
-                return "♖";
-            case WHITE_BISHOP:
-                return "♗";
-            case WHITE_KNIGHT:
-                return "♘";
-            case WHITE_PAWN:
-                return "♙";
-
-            case BLACK_KING:
-                return "♚";
-            case BLACK_QUEEN:
-                return "♛";
-            case BLACK_ROOK:
-                return "♜";
-            case BLACK_BISHOP:
-                return "♝";
-            case BLACK_KNIGHT:
-                return "♞";
-            case BLACK_PAWN:
-                return "♟";
-
-            default:
-                return "";
-        }
-    }
-
 }
