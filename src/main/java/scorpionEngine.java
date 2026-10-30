@@ -46,8 +46,42 @@ public class scorpionEngine {
     }
 
     private int minimax(int depth, boolean minimizing) {
-        return 0; // TODO: MAKE MINIMAX ALGO, minimax will return a score after being called,
-                  // higher the score, better the move
+        if (board.isMated() || depth == 0) {
+            return evalmove();
+        }
+
+        List<Move> legal = board.legalMoves();
+        int best = Integer.MIN_VALUE;
+        int worst = Integer.MAX_VALUE;
+
+        if (minimizing) {
+            for (Move m : legal) {
+
+                board.doMove(m);
+                int score = minimax(depth - 1, false); // flips to maximizing
+                board.undoMove();
+
+                if (score < worst) { // loops thru all the scores given some legal move has been made, store the
+                                     // worst outcome for the engine
+                    worst = score;
+                }
+            }
+            return worst;
+
+        } else { // if maximizing
+            for (Move m : legal) {
+
+                board.doMove(m);
+                int score = minimax(depth - 1, true); // flips to minimizing
+                board.undoMove();
+
+                if (score > best) { // loops thru all the scores given some legal move has been made, store the
+                                    // best outcome for the engine
+                    best = score;
+                }
+            }
+            return best;
+        }
     }
 
     private int evalmove() {
