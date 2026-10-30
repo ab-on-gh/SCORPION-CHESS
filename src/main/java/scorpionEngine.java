@@ -86,9 +86,9 @@ public class scorpionEngine {
 
     private int evalmove(int depth) {
         if (board.isMated() && board.getSideToMove() == side) {
-            return (depth - 10000);
+            return (-10000 - depth);
         } else if (board.isMated()) {
-            return (depth + 10000);
+            return (10000 + depth);
         } else {
             return 0;
         }
