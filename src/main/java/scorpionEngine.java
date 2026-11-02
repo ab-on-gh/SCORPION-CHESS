@@ -138,11 +138,17 @@ public class scorpionEngine {
     }
 
     private int centerBonus(Square s, Piece p) {
+        // engine pieces get a bonus for being in the center, opponent pieces reduce
+        // engine's bonus
         int adv = 0;
         if (pieceValues.get(p) != null && pieceValues.get(p) >= 1 && pieceValues.get(p) < 5) {
             int file = s.getFile().ordinal();
             int rank = s.getRank().ordinal();
-            adv = centerBonus[file][rank];
+            if (p.getPieceSide() == side) {
+                adv = centerBonus[file][rank];
+            } else {
+                adv -= centerBonus[file][rank];
+            }
         }
         return adv;
     }
@@ -176,20 +182,21 @@ public class scorpionEngine {
             { 0, 1, 2, 3, 3, 2, 1, 0 } };
 
     private static Map<Piece, Integer> pieceValues = Map.of(
-            Piece.WHITE_PAWN, 1,
-            Piece.BLACK_PAWN, 1,
+            Piece.WHITE_PAWN, 10,
+            Piece.BLACK_PAWN, 10,
 
-            Piece.WHITE_KNIGHT, 3,
-            Piece.BLACK_KNIGHT, 3,
+            Piece.WHITE_KNIGHT, 30,
+            Piece.BLACK_KNIGHT, 30,
 
-            Piece.WHITE_BISHOP, 3,
-            Piece.BLACK_BISHOP, 3,
+            // bishops are slightly more valuable than knights
+            Piece.WHITE_BISHOP, 35,
+            Piece.BLACK_BISHOP, 35,
 
-            Piece.WHITE_ROOK, 5,
-            Piece.BLACK_ROOK, 5,
+            Piece.WHITE_ROOK, 50,
+            Piece.BLACK_ROOK, 50,
 
-            Piece.WHITE_QUEEN, 9,
-            Piece.BLACK_QUEEN, 9);
+            Piece.WHITE_QUEEN, 90,
+            Piece.BLACK_QUEEN, 90);
 
     private int randomMove(List<Move> legal) {
         return (int) (Math.random() * legal.size());
