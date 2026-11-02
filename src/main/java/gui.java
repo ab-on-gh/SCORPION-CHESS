@@ -25,21 +25,23 @@ public class gui extends JPanel {
         f.dispose();
     }
 
+    private static JButton selected = null;
+    private boolean[][] squareWhite = new boolean[8][8];
+
     public void setBoard(boolean userWhite) {
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                boolean squarecolor;
                 JButton b = new JButton();
                 b.setOpaque(true);
                 b.setBorderPainted(false);
 
                 if ((c + r) % 2 == 0) {
                     b.setBackground(Color.WHITE);
-                    squarecolor = true;
+                    squareWhite[r][c] = true;
                 } else {
                     b.setBackground(Color.GRAY);
-                    squarecolor = false;
+                    squareWhite[r][c] = false;
                 }
 
                 int num;
@@ -59,8 +61,14 @@ public class gui extends JPanel {
                 p.add(b);
 
                 b.addActionListener(e -> {
+                    if (selected == null) {
+                        selected = b;
+                    } else {
+                        selected = null;
+                    }
                     mover.handleClicks(name);
                     updateBoard();
+
                     checkGameOver();
                 });
             }
@@ -105,8 +113,14 @@ public class gui extends JPanel {
                 } else {
                     square.setIcon(null);
                 }
+                if (square == selected) {
+                    square.setBackground(Color.ORANGE);
+                } else if (squareWhite[r][c]) {
+                    square.setBackground(Color.WHITE);
+                } else {
+                    square.setBackground(Color.GRAY);
+                }
             }
         }
     }
-
 }
