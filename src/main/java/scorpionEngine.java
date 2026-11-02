@@ -35,11 +35,13 @@ public class scorpionEngine {
     }
 
     private Move getBest(List<Move> legal) {
-        boolean coinflip = random.nextBoolean();
+
         int best = Integer.MIN_VALUE;
         Move e = null;
 
         for (Move m : legal) {
+            boolean coinflip = random.nextBoolean();
+            
             board.doMove(m);
             int score = minimax(4, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             board.undoMove();
