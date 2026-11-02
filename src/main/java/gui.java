@@ -76,9 +76,11 @@ public class gui extends JPanel {
 
     private void checkGameOver() {
         if (board.isMated()) {
+            updateBoard();
             System.out.println(board.getSideToMove() + " is mated!");
             closeBoard();
         } else if (board.isDraw()) {
+            updateBoard();
             System.out.println("Draw");
             closeBoard();
         }
