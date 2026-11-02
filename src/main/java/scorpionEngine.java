@@ -41,7 +41,7 @@ public class scorpionEngine {
 
         for (Move m : legal) {
             boolean coinflip = random.nextBoolean();
-            
+
             board.doMove(m);
             int score = minimax(4, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             board.undoMove();
@@ -112,9 +112,19 @@ public class scorpionEngine {
         } else if (board.isMated()) {
             return (10000 + depth);
         } else {
+            adv = pieceAdv() + positionalAdv();
             return pieceAdv();
         }
 
+    }
+
+    private int positionalAdv() {
+        // if less than 15 moves in {add bonuses for pieces in the centre}
+        // if more than 15 moves in && queens still on board {less bonuses for pieces in
+        // the centre, more bonuses for castled kings, bishops on diagonals}
+        // if queens off the board {bonuses for kings in the centre, pawns near the back
+        // rank}
+        return 0;
     }
 
     private int pieceAdv() {
