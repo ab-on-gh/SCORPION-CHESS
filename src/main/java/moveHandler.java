@@ -36,36 +36,41 @@ public class moveHandler {
         boolean promotion = false;
         List<Move> legal = board.legalMoves();
         String choice;
-        
+
         for (Move m : legal) {
             String mts = m.toString();
-            if (mts.length() == 5 && mts.startsWith(usermove)) {
+
+            if (mts.length() == 5 && mts.startsWith(usermove.toLowerCase())) {
                 promotion = true;
                 break;
             }
         }
 
         if (!promotion) {
-            return usermove; 
+            // System.out.println("Not a promotion");
+            return usermove;
         }
 
         System.out.println("Promotion time! Pick q (queen), r (rook), b (bishop), n (knight)");
-            while (true) {
-                try {
-                    choice = input.next();
-                    if (choice != "q" && choice != "r" && choice != "b" && choice != "n")  {
-                        System.out.println("Invalid input.");
-                        System.out.println("Pick q (queen), r (rook), b (bishop), n (knight)");
-                        continue;
-                    } else {
-                        break;
-                    }
-                } catch (Exception e) {
+        while (true) {
+            try {
+                choice = input.next();
+                if (!choice.equalsIgnoreCase("q") && !choice.equalsIgnoreCase("r") && !choice.equalsIgnoreCase("b")
+                        && !choice.equalsIgnoreCase("n")) {
                     System.out.println("Invalid input.");
                     System.out.println("Pick q (queen), r (rook), b (bishop), n (knight)");
-                    input.nextLine();
+                    continue;
+                } else {
+                    break;
                 }
-        return usermove + choice;
+            } catch (Exception e) {
+                System.out.println("Invalid input.");
+                System.out.println("Pick q (queen), r (rook), b (bishop), n (knight)");
+                input.nextLine();
+            }
+        }
+
+        return (usermove + choice);
     }
 
     public boolean handleTurns(String usermove) {
