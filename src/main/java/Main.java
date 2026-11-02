@@ -5,7 +5,7 @@ public class Main {
     static Board board = new Board();
 
     public static void main(String[] args) {
-        board.loadFromFen("7k/5K2/8/8/8/8/6R1/4b w - - 0 1");
+        // board.loadFromFen("7k/5K2/8/8/8/8/6R1/4b w - - 0 1");
         boolean userWhite = false;
         scorpionEngine engine;
 

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.Math;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.move.Move;
@@ -35,7 +36,7 @@ public class scorpionEngine {
         Move e = null;
         for (Move m : legal) {
             board.doMove(m);
-            int score = minimax(4, true);
+            int score = minimax(4, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             board.undoMove();
 
             if (score > best) { // loops thru all the scores given some legal move has been made, store the best
@@ -47,7 +48,7 @@ public class scorpionEngine {
         return e; // return the best move
     }
 
-    private int minimax(int depth, boolean minimizing) {
+    private int minimax(int depth, int alpha, int beta, boolean minimizing) {
         if (board.isMated() || depth == 0) {
             return evalmove(depth);
         }
@@ -60,13 +61,19 @@ public class scorpionEngine {
             for (Move m : legal) {
 
                 board.doMove(m);
-                int score = minimax(depth - 1, false); // flips to maximizing
+                int score = minimax(depth - 1, alpha, beta, false); // flips to maximizing
                 board.undoMove();
 
-                if (score < worst) { // loops thru all the scores given some legal move has been made, store the
-                                     // worst outcome for the engine
-                    worst = score;
+                worst = Math.min(worst, score); // loops thru all the scores given some legal move has been made, store
+                                                // the worst outcome for the engine. (improved from previous if
+                                                // statement--less writing)
+
+                beta = Math.min(beta, worst);
+
+                if (alpha >= beta) {
+                    break;
                 }
+
             }
             return worst;
 
@@ -74,13 +81,17 @@ public class scorpionEngine {
             for (Move m : legal) {
 
                 board.doMove(m);
-                int score = minimax(depth - 1, true); // flips to minimizing
+                int score = minimax(depth - 1, alpha, beta, true); // flips to minimizing
                 board.undoMove();
 
-                if (score > best) { // loops thru all the scores given some legal move has been made, store the
-                                    // best outcome for the engine
-                    best = score;
+                best = Math.max(best, score); // store best outcome for engine
+
+                alpha = Math.max(alpha, best);
+
+                if (alpha >= beta) {
+                    break;
                 }
+
             }
             return best;
         }
