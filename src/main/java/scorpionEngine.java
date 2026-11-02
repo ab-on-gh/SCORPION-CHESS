@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.move.Move;
@@ -90,10 +92,44 @@ public class scorpionEngine {
         } else if (board.isMated()) {
             return (10000 + depth);
         } else {
-            return 0;
+            return pieceAdv();
         }
 
     }
+
+    private int pieceAdv() {
+        int adv = 0;
+
+        for (Piece p : pieceValues.keySet()) {
+            if (p.getPieceSide() == side) {
+                adv += pieceValues.get(p) * Long.bitCount(board.getBitboard(p));
+                // Long.bitCount(board.getBitboard(p)) returns the number of pieces of type p.
+                // eg. 3 pawns and a knight for the engine will add (1+1+1+3)=6 to its advantage
+            } else {
+                adv -= pieceValues.get(p) * Long.bitCount(board.getBitboard(p));
+                // eg. 3 pawns and a knight for the opponent will subtract 6 from engine's
+                // advantage.
+            }
+        }
+
+        return adv;
+    }
+
+    private static Map<Piece, Integer> pieceValues = Map.of(
+            Piece.WHITE_PAWN, 1,
+            Piece.BLACK_PAWN, 1,
+
+            Piece.WHITE_KNIGHT, 3,
+            Piece.BLACK_KNIGHT, 3,
+
+            Piece.WHITE_BISHOP, 3,
+            Piece.BLACK_BISHOP, 3,
+
+            Piece.WHITE_ROOK, 5,
+            Piece.BLACK_ROOK, 5,
+
+            Piece.WHITE_QUEEN, 9,
+            Piece.BLACK_QUEEN, 9);
 
     private int randomMove(List<Move> legal) {
         return (int) (Math.random() * legal.size());
