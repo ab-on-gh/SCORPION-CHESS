@@ -4,11 +4,13 @@ import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
+import java.util.Scanner;
 
 public class moveHandler {
     final Board board;
     final scorpionEngine engine;
     String from = null;
+    static Scanner input = new Scanner(System.in);
 
     public moveHandler(Board board, scorpionEngine engine) {
         this.board = board;
@@ -22,10 +24,48 @@ public class moveHandler {
         }
 
         String usermove = from + selected; // the user move is from the first square to the second selected square
-        System.out.println(usermove);
+        // System.out.println(usermove);
+
+        usermove = checkPromotions(usermove);
 
         handleTurns(usermove); // make the user's move
         from = null; // reset the selection
+    }
+
+    private String checkPromotions(String usermove) {
+        boolean promotion = false;
+        List<Move> legal = board.legalMoves();
+        String choice;
+        
+        for (Move m : legal) {
+            String mts = m.toString();
+            if (mts.length() == 5 && mts.startsWith(usermove)) {
+                promotion = true;
+                break;
+            }
+        }
+
+        if (!promotion) {
+            return usermove; 
+        }
+
+        System.out.println("Promotion time! Pick q (queen), r (rook), b (bishop), n (knight)");
+            while (true) {
+                try {
+                    choice = input.next();
+                    if (choice != "q" && choice != "r" && choice != "b" && choice != "n")  {
+                        System.out.println("Invalid input.");
+                        System.out.println("Pick q (queen), r (rook), b (bishop), n (knight)");
+                        continue;
+                    } else {
+                        break;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid input.");
+                    System.out.println("Pick q (queen), r (rook), b (bishop), n (knight)");
+                    input.nextLine();
+                }
+        return usermove + choice;
     }
 
     public boolean handleTurns(String usermove) {
