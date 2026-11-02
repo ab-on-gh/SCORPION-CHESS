@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.lang.Math;
 
 import com.github.bhlangonijr.chesslib.Board;
@@ -20,6 +21,8 @@ public class scorpionEngine {
         this.side = side;
     }
 
+    public Random random = new Random();
+
     public Move moveGenerator() {
         List<Move> legal = board.legalMoves();
         if (legal.size() == 0) {
@@ -32,8 +35,10 @@ public class scorpionEngine {
     }
 
     private Move getBest(List<Move> legal) {
+        boolean coinflip = random.nextBoolean();
         int best = Integer.MIN_VALUE;
         Move e = null;
+
         for (Move m : legal) {
             board.doMove(m);
             int score = minimax(4, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
@@ -42,6 +47,8 @@ public class scorpionEngine {
             if (score > best) { // loops thru all the scores given some legal move has been made, store the best
                                 // move into e
                 best = score;
+                e = m;
+            } else if (score == best && coinflip) { // if two moves are equal, flip a coin
                 e = m;
             }
         }
