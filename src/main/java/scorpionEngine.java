@@ -112,19 +112,39 @@ public class scorpionEngine {
         } else if (board.isMated()) {
             return (10000 + depth);
         } else {
-            adv = pieceAdv() + positionalAdv();
-            return pieceAdv();
+            int adv = pieceAdv() + positionalAdv();
+            return adv;
         }
 
     }
 
     private int positionalAdv() {
-        // if less than 15 moves in {add bonuses for pieces in the centre}
-        // if more than 15 moves in && queens still on board {less bonuses for pieces in
-        // the centre, more bonuses for castled kings, bishops on diagonals}
-        // if queens off the board {bonuses for kings in the centre, pawns near the back
-        // rank}
-        return 0;
+
+        int adv = 0;
+        int moveCount = board.getMoveCounter();
+        if (moveCount < 15) {
+            // logic for opening (generally opening lasts 15 moves)
+            for (Square s : Square.values()) {
+                Piece p = board.getPiece(s);
+                if (p == Piece.NONE) {
+                    continue;
+                } else {
+                    adv += centerBonus(s, p);
+                }
+            }
+        }
+
+        return adv;
+    }
+
+    private int centerBonus(Square s, Piece p) {
+        int adv = 0;
+        if (pieceValues.get(p) != null && pieceValues.get(p) >= 1 && pieceValues.get(p) < 5) {
+            int file = s.getFile().ordinal();
+            int rank = s.getRank().ordinal();
+            adv = centerBonus[file][rank];
+        }
+        return adv;
     }
 
     private int pieceAdv() {
@@ -144,6 +164,16 @@ public class scorpionEngine {
 
         return adv;
     }
+
+    private static int[][] centerBonus = {
+            { 0, 1, 2, 3, 3, 2, 1, 0 },
+            { 1, 2, 3, 4, 4, 3, 2, 1 },
+            { 2, 3, 4, 5, 5, 4, 3, 2 },
+            { 2, 6, 8, 10, 10, 8, 6, 2 },
+            { 2, 6, 8, 10, 10, 8, 6, 2 },
+            { 2, 3, 4, 5, 5, 4, 3, 2 },
+            { 1, 2, 3, 4, 4, 3, 2, 1 },
+            { 0, 1, 2, 3, 3, 2, 1, 0 } };
 
     private static Map<Piece, Integer> pieceValues = Map.of(
             Piece.WHITE_PAWN, 1,
