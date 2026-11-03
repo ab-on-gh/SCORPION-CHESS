@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.scorpion</groupId>
-    <artifactId>scorpion-engine</artifactId>
+    <artifactId>scorpion-chess</artifactId>
     <version>1.0.0</version>
 
     <properties>
