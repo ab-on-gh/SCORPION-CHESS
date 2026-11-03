@@ -34,10 +34,10 @@ This project is part of a self-proposed extension to my ICS4U coursework.
 _SCORPION-CHESS_ would not be possible without chesslib by @bhlangonijr. See THIRD-PARTY-NOTICES.md for more details.  
 
 
-<p align="center"> 
-  
+<div align="center"> 
+  <p> <sub>
   First official release: November 2, 2026. 
   <br>
   © 2026 AB. All rights reserved. 
-  
-</p>
+  </sub> </p>
+</div>
