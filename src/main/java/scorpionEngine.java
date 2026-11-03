@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.lang.Math;
-
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
+
+// v1.0.0
 
 public class scorpionEngine {
 

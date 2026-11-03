@@ -6,6 +6,8 @@ import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
 import java.util.Scanner;
 
+// v1.0.0
+
 public class moveHandler {
     final Board board;
     final scorpionEngine engine;

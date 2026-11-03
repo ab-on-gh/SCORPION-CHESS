@@ -2,6 +2,8 @@ import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.Side;
 import java.util.Scanner;
 
+// v1.0.0
+
 public class Main {
     static Board board = new Board();
     static Scanner input = new Scanner(System.in);

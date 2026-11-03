@@ -3,9 +3,10 @@ import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Side;
-
 import javax.swing.*;
 import java.awt.*;
+
+// v1.0.0
 
 public class gui extends JPanel {
 
