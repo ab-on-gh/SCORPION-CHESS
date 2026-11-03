@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/minimax.gif">
-  <img src="assets/madewithmaven.gif">
-  <img src="assets/alphabeta.gif">
+  <img src="blinkies/minimax.gif">
+  <img src="blinkies/madewithmaven.gif">
+  <img src="blinkies/alphabeta.gif">
 </p>
